@@ -53,9 +53,10 @@ sub(cfg, r'pub const RS_PUB_KEY: &str = "[^"]*";', f'pub const RS_PUB_KEY: &str 
 
 # 2) Metadados do executavel (Propriedades > Detalhes no Windows)
 for toml in ("Cargo.toml", "libs/portable/Cargo.toml"):
-    sub(toml, r'(?m)^LegalCopyright = ".*"$', f'LegalCopyright = "{COPYRIGHT}"')
-    sub(toml, r'(?m)^ProductName = ".*"$', f'ProductName = "{DISPLAY}"')
-    sub(toml, r'(?m)^FileDescription = ".*"$', f'FileDescription = "{DISPLAY} - Acesso remoto Cardsinova"')
+    # sem ancora "$": no runner Windows o checkout vem com CRLF
+    sub(toml, r'(?m)^LegalCopyright = "[^"]*"', f'LegalCopyright = "{COPYRIGHT}"')
+    sub(toml, r'(?m)^ProductName = "[^"]*"', f'ProductName = "{DISPLAY}"')
+    sub(toml, r'(?m)^FileDescription = "[^"]*"', f'FileDescription = "{DISPLAY} - Acesso remoto Cardsinova"')
 rc = "flutter/windows/runner/Runner.rc"
 sub(rc, r'VALUE "CompanyName", ".*?"', f'VALUE "CompanyName", "{COMPANY}"')
 sub(rc, r'VALUE "FileDescription", ".*?"', f'VALUE "FileDescription", "{DISPLAY} - Acesso remoto Cardsinova"')
