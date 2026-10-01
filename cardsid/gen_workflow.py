@@ -86,6 +86,14 @@ body = body.replace("          prerelease: true\n          tag_name: ${{ env.TAG
                     "          prerelease: false\n          name: CardsID Suporte ${{ env.VERSION }} (build ${{ github.run_number }})\n"
                     "          tag_name: ${{ env.TAG_NAME }}")
 
+# bridge.yml: o bridge do Flutter 3.44 so serve ao Windows ARM64 (nao compilamos) e ja travou o build
+bp = ROOT / ".github/workflows/bridge.yml"
+bsrc = bp.read_text(encoding="utf-8")
+bnew, n = re.subn(r"\n\s*# Dedicated bridge for the Windows arm64 build[^\n]*\n\s*- \{[^{}]*\}", "", bsrc)
+if n:
+    bp.write_text(bnew, encoding="utf-8")
+    print("[gen_workflow] bridge.yml: removido bridge Flutter 3.44 (ARM64)")
+
 out = ROOT / ".github/workflows/cardsid-build.yml"
 out.write_text(header + body, encoding="utf-8")
 print(f"[gen_workflow] gerado {out.relative_to(ROOT)} ({len((header + body).splitlines())} linhas)")
