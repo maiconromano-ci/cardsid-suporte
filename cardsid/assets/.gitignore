@@ -1,0 +1,3 @@
+# O .gitignore da raiz ignora *png e *svg; os arquivos de marca precisam ir para o repositorio
+!*.png
+!*.svg
