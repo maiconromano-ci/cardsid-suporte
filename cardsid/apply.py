@@ -83,6 +83,22 @@ sub(dart, r"0xAA0071FF", f"0xAA{PURPLE}", count=0)
 sub(dart, r"0xFF2C8CFF", f"0xFF{PURPLE}", count=0)
 sub(dart, r"(static const Color idColor = Color\()0xFF00B6F0", rf"\g<1>0xFF{GOLD}")
 
+# 2b) Interface (todas)
+# "Desenvolvido por RustDesk" sai da tela inicial; creditos e licenca AGPL continuam em "Sobre"
+sub(dart, r'if \(bind\.mainGetBuildinOption\(key: "hide-powered-by-me"\) == \'Y\'\) \{', "if (true) {")
+# Rodape "configure seu proprio servidor": o servidor proprio ja vem embutido
+sub("flutter/lib/desktop/pages/connection_page.dart",
+    r"offstage: !\(!_svcStopped\.value &&\s*stateGlobal\.svcStatus\.value == SvcStatus\.ready &&\s*_svcIsUsingPublicServer\.value\),",
+    "offstage: true,")
+# Cartao "Instalar": texto curto e cores da marca no lugar do aviso rosa sobre UAC
+sub("src/lang/ptbr.rs", r'\("install_tip", "[^"]*"\)',
+    '("install_tip", "Atendimento recorrente? Instale o RustDesk neste computador para o técnico também conseguir ajudar nas telas de permissão do Windows.")')
+sub("src/lang/en.rs", r'\("install_tip", "[^"]*"\)',
+    '("install_tip", "Regular support? Install RustDesk on this computer so the technician can also help with Windows permission prompts.")')
+home = "flutter/lib/desktop/pages/desktop_home_page.dart"
+sub(home, r"Color\.fromARGB\(255, 226, 66, 188\)", "Color.fromARGB(255, 0x58, 0x16, 0x7D)")
+sub(home, r"Color\.fromARGB\(255, 244, 114, 124\)", "Color.fromARGB(255, 0x8E, 0x3B, 0x9E)")
+
 # 3) Icones e logos dentro do app (todas)
 copy("icon.png", "res/icon.png", "flutter/assets/icon.png")
 copy("icon.svg", "flutter/assets/icon.svg")
