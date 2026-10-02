@@ -15,10 +15,15 @@ Todas as alterações são aplicadas na hora do build por [`cardsid/apply.py`](c
 Nenhum segredo fica neste repositório.
 
 ## Build
-GitHub Actions → **CardsID Suporte - build Windows** (`.github/workflows/cardsid-build.yml`),
+GitHub Actions → **CardsID Suporte - build** (`.github/workflows/cardsid-build.yml`),
 disparado a cada push na branch `cardsid` ou manualmente. Gera uma Release com:
-- `CardsID-Suporte-<versão>.exe` — executa direto (com opção de instalar);
-- `CardsID-Suporte-<versão>-Instalador.msi` — instalador com assistente.
+- Windows x64: `CardsID-Suporte-<versão>.exe` (executa direto, com opção de instalar) e `-Instalador.msi`;
+- macOS: `-mac-x86_64.dmg` (Intel) e `-mac-aarch64.dmg` (Apple Silicon) — sem assinatura Apple;
+- Linux x86_64/aarch64: `.deb`, `.rpm`, `-suse.rpm` e `.AppImage`.
+
+No Windows a marca é completa (nome do app inclusive). No macOS/Linux o nome interno
+continua "RustDesk" (ele define serviço, pastas e pacote), mas servidor, chave, ícones,
+logo, cores e o nome no menu são da Cardsinova.
 
 ## Atualizar para uma versão nova do RustDesk
 ```
